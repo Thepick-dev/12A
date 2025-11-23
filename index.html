@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LMS XII</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* palette */
+    --bg: #ffffff;
+    --text: #000000;
+    --muted: #111;
+    --accent-cyan: #00f2ff;
+    --accent-pink: #ff007f;
+    --accent-green: #00ff66;
+    --accent-orange: #ff8a2b;
+    --accent-yellow: #ffd400;
+
+    /* sizing */
+    --gap-large: 56px;
+    --gap-mid: 36px;
+    --gap-small: 18px;
+
+    /* timings */
+    --t-fast: 160ms;
+    --t-mid: 300ms;
+    --t-slow: 520ms;
+
+    /* shadow/neon */
+    --neon-strength: 0.18; /* reduce intensity for premium look */
+    --neon-blur: 18px;
+  }
+
+  /* Base */
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+  body{font-family: "League Spartan", "Helvetica Neue", Arial, sans-serif; display:flex; flex-direction:column; align-items:center;}
+
+  /* Remove browser highlight on tap/focus but keep accessible focus outline via custom style */
+  a, button { -webkit-tap-highlight-color: transparent; text-decoration:none; -webkit-user-select:none; user-select:none; }
+  a:focus, button:focus { outline: none; box-shadow: 0 0 0 4px rgba(0,0,0,0.06); border-radius:4px; }
+
+  .container{width:100%;max-width:920px;padding:14px 20px 18px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;min-height:calc(100vh - 88px);}
+
+  /* header */
+  .nav {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    align-items:center;
+    padding:10px 0;
+    box-sizing:border-box;
+  }
+  .nav a {
+    color:var(--muted);
+    font-weight:700;
+    font-size:18px;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    transition: color var(--t-fast) ease, text-shadow var(--t-fast) ease, transform var(--t-fast) ease;
+    font-style:normal; /* keep clean for premium */
+  }
+  .nav a:hover,
+  .nav a:focus {
+    color:var(--accent-cyan);
+    text-shadow: 0 0 calc(var(--neon-blur) * 0.6) rgba(0,242,255, calc(var(--neon-strength) * 0.9));
+    transform: translateY(-2px);
+  }
+
+  /* Title block */
+  .hero {
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:6px;
+    margin-bottom:var(--gap-mid);
+    transform-origin:center;
+    animation: hero-intro var(--t-slow) cubic-bezier(.2,.9,.25,1) both;
+  }
+
+  @keyframes hero-intro {
+    0% { opacity:0; transform: translateY(8px) scale(.99); }
+    100% { opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  h1.title {
+    margin:0;
+    font-family:"Bebas Neue", "League Spartan", sans-serif;
+    font-weight:400;
+    line-height:0.78;
+    text-align:center;
+    font-size: clamp(110px, 14vw, 220px);
+    padding:14px 28px;
+    color:var(--text);
+    border-radius:10px;
+    box-sizing:border-box;
+
+    /* refined border: thin gradient stroke */
+    border: 2px solid transparent;
+    background-image:
+      linear-gradient(var(--bg), var(--bg)),
+      linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+
+    /* subtle inner depth */
+    box-shadow: inset 0 -4px 12px rgba(0,0,0,0.04);
+  }
+
+  .tagline {
+    margin-top:14px;
+    margin-bottom:var(--gap-mid);
+    font-size:clamp(18px, 3.5vw, 28px);
+    font-weight:700;
+    text-transform:uppercase;
+    color:var(--accent-pink);
+    letter-spacing:1px;
+  }
+
+  /* Main actions list */
+  .actions {
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:var(--gap-large);
+    margin-bottom:var(--gap-mid);
+  }
+
+  .action {
+    font-family: "League Spartan", sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    font-size: clamp(44px, 7.8vw, 86px);
+    color:var(--text);
+    position:relative;
+    transition: transform var(--t-mid) cubic-bezier(.2,.9,.25,1), color var(--t-fast) ease;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Decorative subtle "neon outline" on hover using pseudo-element */
+  .action::after{
+    content:"";
+    position:absolute;
+    inset:-6px;
+    border-radius:6px;
+    border:2px solid transparent;
+    pointer-events:none;
+    transition: box-shadow var(--t-mid) ease, border-color var(--t-mid) ease, transform var(--t-mid) ease;
+    transform: translateZ(0);
+  }
+  .action:hover::after,
+  .action:focus::after {
+    border-color: currentColor;
+    box-shadow: 0 0 calc(var(--neon-blur) * 0.9) currentColor;
+  }
+
+  /* map colors */
+  .predict { color:var(--muted); --c:var(--accent-cyan); }
+  .predict:hover,
+  .predict:focus { color: var(--accent-cyan); --c:var(--accent-cyan); }
+
+  .table { color:var(--muted); --c:var(--accent-pink); }
+  .table:hover,
+  .table:focus { color:var(--accent-pink); --c:var(--accent-pink); }
+
+  .rules { color:var(--muted); --c:var(--accent-orange); }
+  .rules:hover,
+  .rules:focus { color:var(--accent-orange); --c:var(--accent-orange); }
+
+  .updates { color:var(--muted); --c:var(--accent-yellow); }
+  .updates:hover,
+  .updates:focus { color:var(--accent-yellow); --c:var(--accent-yellow); }
+
+  /* footer */
+  .footer {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    padding:10px 0 30px;
+    box-sizing:border-box;
+  }
+  .footer a{
+    color:var(--muted);
+    font-weight:700;
+    font-size:16px;
+    text-transform:uppercase;
+    transition: color var(--t-fast) ease, text-shadow var(--t-fast) ease, transform var(--t-fast) ease;
+  }
+  .footer a:hover, .footer a:focus{ color:var(--accent-cyan); text-shadow:0 0 8px rgba(0,242,255,0.12); transform: translateY(-2px); }
+
+  /* smaller screens adjust spacing */
+  @media (max-width:480px){
+    :root{ --gap-large: 42px; --gap-mid: 28px; --neon-blur: 14px; }
+    h1.title{ font-size: clamp(96px, 22vw, 180px); padding:12px 20px; }
+    .action{ font-size: clamp(40px, 10vw, 72px); }
+    .tagline{ font-size:20px; margin-bottom:22px; }
+    .nav a{ font-size:16px; gap:18px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="picks.html">Predict</a>
+      <a href="table.html">Table</a>
+      <a href="rules.html">Rules</a>
+      <a href="updates.html">Updates</a>
+    </nav>
+
+    <header class="hero" role="banner">
+      <h1 class="title">LMS XII</h1>
+      <div class="tagline">LET'S BE HAVING YOU</div>
+    </header>
+
+    <main class="actions" role="main" aria-label="Primary actions">
+      <a class="action predict" href="picks.html" aria-label="Predict">Predict</a>
+      <a class="action table" href="table.html" aria-label="Table">Table</a>
+      <a class="action rules" href="rules.html" aria-label="Rules">Rules</a>
+      <a class="action updates" href="updates.html" aria-label="Updates">Updates</a>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <a href="index.html">Home</a>
+      <a href="picks.html">Predict</a>
+      <a href="table.html">Table</a>
+      <a href="rules.html">Rules</a>
+      <a href="updates.html">Updates</a>
+    </footer>
+  </div>
+
+  <script>
+    // Accessibility: keyboard users should see same hover/focus visuals.
+    // Add keyboard focus styles for the action links (makes focus visible)
+    (function(){
+      const actions = Array.from(document.querySelectorAll('.action, .nav a, .footer a'));
+      actions.forEach(a=>{
+        a.setAttribute('tabindex','0');
+        a.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // small press animation by toggling class
+            a.style.transition = 'transform 140ms ease';
+            a.style.transform = 'scale(0.995)';
+            setTimeout(()=> a.style.transform = '', 140);
+            const href = a.getAttribute('href');
+            if(href) location.href = href;
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
